@@ -16,6 +16,7 @@
 #endif /* MIN */
 
 #define LED_PIN 25
+#define RST_PIN 18
 
 #define BUFFER_SIZE 2560
 
@@ -297,6 +298,13 @@ void init_uart_data(uint8_t itf)
 	uart_set_irq_enables(ui->inst, true, false);
 }
 
+void tud_cdc_line_state_cb(uint8_t itf, bool dtr, bool rts)
+{
+	(void) dtr;
+	if (itf == 0)
+		gpio_put(RST_PIN, rts ? 1 : 0);   /* flip to (rts ? 1 : 0) if reversed */
+}
+
 int main(void)
 {
 	int itf;
@@ -308,6 +316,10 @@ int main(void)
 
 	gpio_init(LED_PIN);
 	gpio_set_dir(LED_PIN, GPIO_OUT);
+
+	gpio_init(RST_PIN);
+	gpio_set_dir(RST_PIN, GPIO_OUT);
+	gpio_put(RST_PIN, 1);
 
 	multicore_launch_core1(core1_entry);
 
