@@ -301,7 +301,6 @@ void init_uart_data(uint8_t itf)
 void tud_cdc_line_state_cb(uint8_t itf, bool dtr, bool rts)
 {
 	(void) dtr;
-	if (itf == 0)
 		gpio_put(RST_PIN, rts ? 1 : 0);   /* flip to (rts ? 1 : 0) if reversed */
 }
 
