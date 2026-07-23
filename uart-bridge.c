@@ -288,8 +288,8 @@ void init_uart_data(uint8_t itf)
 	uart_init(ui->inst, ud->usb_lc.bit_rate);
 	uart_set_hw_flow(ui->inst, false, false);
 	uart_set_format(ui->inst, databits_usb2uart(ud->usb_lc.data_bits),
-			stopbits_usb2uart(ud->usb_lc.stop_bits),
-			parity_usb2uart(ud->usb_lc.parity));
+	stopbits_usb2uart(ud->usb_lc.stop_bits),
+	parity_usb2uart(ud->usb_lc.parity));
 	uart_set_fifo_enabled(ui->inst, false);
 
 	/* UART RX Interrupt */
